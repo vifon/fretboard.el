@@ -10,6 +10,9 @@ USAGE
 
 Use `M-x fretboard` to open the fretboard visualization.
 
+Use the keys corresponding to the notes to highlight them.
+To highlight semitones, prefix the key with `#` (yes, prefix!).
+
 INSTALLATION
 ------------
 
