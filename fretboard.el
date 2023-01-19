@@ -101,7 +101,7 @@ If customized, should keep the general conventions to preserve
 the correct syntax highlighting.")
 
 (defvar fretboard-mode-font-lock-keywords
-  '(("\\(|\\)" 1 'fretboard-fretline-face)
+  '(("\\(|+\\)" 1 'fretboard-fretline-face)
     ("\\([XVI]+\\)" 1 'fretboard-fret-number-face)
     ("\\([A-G]#\\)" 1 'fretboard-semitone-face)
     ("\\([A-G]\\)[^#]" 1 'bold)))
