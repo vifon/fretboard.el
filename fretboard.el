@@ -3,7 +3,8 @@
 ;; Copyright (C) 2023  Wojciech Siewierski
 
 ;; Author: Wojciech Siewierski
-;; Keywords:
+;; URL: https://github.com/vifon/fretboard.el
+;; Keywords: games
 ;; Version: 0.9
 ;; Package-Requires: ((emacs "28.1") (symbol-overlay "4.1"))
 
@@ -31,9 +32,11 @@
 ;; To highlight semitones, prefix the key with # (yes, prefix!).
 
 ;;; Code:
+(require 'symbol-overlay)
 
 (defgroup fretboard nil
-  "A guitar fretboard visualization.")
+  "A guitar fretboard visualizer."
+  :group 'applications)
 
 (defgroup fretboard-faces nil
   "Faces in `fretboard-mode'."
@@ -41,10 +44,8 @@
 
 (defun fretboard-highlight-note ()
   "Highlight the note corresponding to the pressed key.
-
 The key is being read directly from the used keybinding."
   (interactive)
-  (require 'symbol-overlay)
   (let* ((note (reverse (upcase (this-command-keys))))
          (keyword (symbol-overlay-assoc note)))
     (if keyword
