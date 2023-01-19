@@ -102,9 +102,9 @@ the correct syntax highlighting."
   :type 'string)
 
 (defvar fretboard-mode-font-lock-keywords
-  '(("\\(|+\\)" 1 'fretboard-fretline-face)
-    ("\\([XVI]+\\)" 1 'fretboard-fret-number-face)
-    ("\\([A-G]#\\)" 1 'fretboard-semitone-face)
+  '(("|+" . 'fretboard-fretline-face)
+    ("[XVI]+" . 'fretboard-fret-number-face)
+    ("[A-G]#" . 'fretboard-semitone-face)
     ("\\([A-G]\\)[^#]" 1 'bold)))
 
 (defvar fretboard-mode-syntax-table
