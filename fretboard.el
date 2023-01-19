@@ -32,6 +32,7 @@
 ;; To highlight semitones, prefix the key with # (yes, prefix!).
 
 ;;; Code:
+
 (require 'symbol-overlay)
 
 (defgroup fretboard nil
