@@ -100,6 +100,7 @@ The key is being read directly from the used keybinding."
 
 If customized, should keep the general conventions to preserve
 the correct syntax highlighting."
+  :group 'fretboard
   :type 'string)
 
 (defvar fretboard-mode-font-lock-keywords
