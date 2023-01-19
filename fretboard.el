@@ -68,11 +68,6 @@ The key is being read directly from the used keybinding."
     (define-key map (kbd "# a") #'fretboard-highlight-note)
     map))
 
-(defvar fretboard-mode-syntax-table
-  (let ((st (make-syntax-table)))
-    (modify-syntax-entry ?# "_" st)
-    st))
-
 (defface fretboard-fretline-face
   '((((background light)) :foreground "#ddd")
     (((background dark))  :foreground "#333"))
@@ -105,6 +100,17 @@ The key is being read directly from the used keybinding."
 If customized, should keep the general conventions to preserve
 the correct syntax highlighting.")
 
+(defvar fretboard-mode-font-lock-keywords
+  '(("\\(|\\)" 1 'fretboard-fretline-face)
+    ("\\([XVI]+\\)" 1 'fretboard-fret-number-face)
+    ("\\([A-G]#\\)" 1 'fretboard-semitone-face)
+    ("\\([A-G]\\)[^#]" 1 'bold)))
+
+(defvar fretboard-mode-syntax-table
+  (let ((st (make-syntax-table)))
+    (modify-syntax-entry ?# "_" st)
+    st))
+
 (define-derived-mode fretboard-mode special-mode "fretboard"
   "Major mode for the fretboard visualization."
   (read-only-mode 1)
@@ -112,10 +118,7 @@ the correct syntax highlighting.")
   (setq-local revert-buffer-function (lambda (_ignore-auto _noconfirm)
                                        (fretboard)))
   (setq font-lock-defaults
-        '((("\\(|\\)" 1 'fretboard-fretline-face)
-           ("\\([XVI]+\\)" 1 'fretboard-fret-number-face)
-           ("\\([A-G]#\\)" 1 'fretboard-semitone-face)
-           ("\\([A-G]\\)[^#]" 1 'bold))
+        '(fretboard-mode-font-lock-keywords
           t)))
 
 ;;;###autoload
