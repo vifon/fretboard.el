@@ -83,7 +83,7 @@ The key is being read directly from the used keybinding."
     (((background dark))  :foreground "#707"))
   "Face used for the fret numbers.")
 
-(defvar fretboard-text
+(defcustom fretboard-text
   "
 
  E  ||  F  | F# |  G  | G# | A | A# |  B  | C  | C# | D | D# |  E  | F  |
@@ -98,7 +98,8 @@ The key is being read directly from the used keybinding."
   "The contents of the buffer created with `fretboard'.
 
 If customized, should keep the general conventions to preserve
-the correct syntax highlighting.")
+the correct syntax highlighting."
+  :type 'string)
 
 (defvar fretboard-mode-font-lock-keywords
   '(("\\(|+\\)" 1 'fretboard-fretline-face)
