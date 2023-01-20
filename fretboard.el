@@ -44,17 +44,26 @@
   "Faces in `fretboard-mode'."
   :group 'fretboard)
 
+(defcustom fretboard-highlight-faces
+  (mapcar #'intern hi-lock-face-defaults)
+  "Faces to use for note highlighting in `fretboard-mode'."
+  :type '(repeat face))
+
+
 (defun fretboard-highlight-note ()
   "Highlight the note corresponding to the pressed key.
 The key is being read directly from the used keybinding."
   (interactive)
   (let* ((note (reverse (upcase (this-command-keys))))
-         (regex (rx symbol-start (literal note) symbol-end)))
-    (if (assoc note hi-lock-interactive-lighters)
-        (unhighlight-regexp note)
-      (let* ((note-id (- (elt note 0) ?A))
-             (face (elt hi-lock-face-defaults note-id)))
-        (highlight-regexp regex face nil note)))))
+         (regex (rx symbol-start (literal note) symbol-end))
+         (note-id (- (elt note 0) ?A))
+         (face (elt fretboard-highlight-faces note-id))
+         (font-lock-pattern `((,regex . ',face))))
+    (if (assoc regex font-lock-keywords)
+        (font-lock-remove-keywords nil font-lock-pattern)
+      (font-lock-add-keywords nil font-lock-pattern))
+    (font-lock-flush)))
+
 
 (defvar fretboard-mode-map
   (let ((map (make-sparse-keymap)))
