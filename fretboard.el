@@ -6,7 +6,7 @@
 ;; URL: https://github.com/vifon/fretboard.el
 ;; Keywords: games
 ;; Version: 0.9
-;; Package-Requires: ((emacs "28.1") (symbol-overlay "4.1"))
+;; Package-Requires: ((emacs "28.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,7 +33,8 @@
 
 ;;; Code:
 
-(require 'symbol-overlay)
+(require 'hi-lock)
+
 
 (defgroup fretboard nil
   "A guitar fretboard visualizer."
@@ -48,10 +49,12 @@
 The key is being read directly from the used keybinding."
   (interactive)
   (let* ((note (reverse (upcase (this-command-keys))))
-         (keyword (symbol-overlay-assoc note)))
-    (if keyword
-        (symbol-overlay-maybe-remove keyword)
-      (symbol-overlay-put-all note keyword))))
+         (regex (rx symbol-start (literal note) symbol-end)))
+    (if (assoc note hi-lock-interactive-lighters)
+        (unhighlight-regexp note)
+      (let* ((note-id (- (elt note 0) ?A))
+             (face (elt hi-lock-face-defaults note-id)))
+        (highlight-regexp regex face nil note)))))
 
 (defvar fretboard-mode-map
   (let ((map (make-sparse-keymap)))
@@ -130,9 +133,7 @@ the correct syntax highlighting."
   "Display an interactive guitar fretboard."
   (interactive)
   (pop-to-buffer (get-buffer-create "*fretboard*"))
-  (when (featurep 'symbol-overlay)
-    (symbol-overlay-remove-all)
-    (setq symbol-overlay-keywords-alist nil))
+  (kill-all-local-variables)
   (let ((inhibit-read-only t))
     (erase-buffer)
     (insert fretboard-text))
