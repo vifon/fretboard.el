@@ -40,6 +40,25 @@
   "A guitar fretboard visualizer."
   :group 'applications)
 
+(defcustom fretboard-text
+  "
+
+ E  ||  F  | F# |  G  | G# | A | A# |  B  | C  | C# | D | D# |  E  | F  |
+ B  ||  C  | C# |  D  | D# | E | F  |  F# | G  | G# | A | A# |  B  | C  |
+ G  ||  G# | A  |  A# | B  | C | C# |  D  | D# | E  | F | F# |  G  | G# |
+ D  ||  D# | E  |  F  | F# | G | G# |  A  | A# | B  | C | C# |  D  | D# |
+ A  ||  A# | B  |  C  | C# | D | D# |  E  | F  | F# | G | G# |  A  | A# |
+ E  ||  F  | F# |  G  | G# | A | A# |  B  | C  | C# | D | D# |  E  | F  |
+
+                  III        V        VII        IX            XII
+"
+  "The contents of the buffer created with `fretboard'.
+
+If customized, should keep the general conventions to preserve
+the correct syntax highlighting."
+  :type 'string)
+
+
 (defgroup fretboard-faces nil
   "Faces in `fretboard-mode'."
   :group 'fretboard)
@@ -48,6 +67,21 @@
   (mapcar #'intern hi-lock-face-defaults)
   "Faces to use for note highlighting in `fretboard-mode'."
   :type '(repeat face))
+
+(defface fretboard-fretline-face
+  '((((background light)) :foreground "#ddd")
+    (((background dark))  :foreground "#333"))
+  "Face for the fret lines on the fretboard.")
+
+(defface fretboard-semitone-face
+  '((((background light)) :foreground "#777")
+    (((background dark))  :foreground "#999"))
+  "Face for the semitones.")
+
+(defface fretboard-fret-number-face
+  '((((background light)) :foreground "#33f")
+    (((background dark))  :foreground "#707"))
+  "Face used for the fret numbers.")
 
 
 (defun fretboard-highlight-note ()
@@ -81,40 +115,6 @@ The key is being read directly from the used keybinding."
     (define-key map (kbd "# g") #'fretboard-highlight-note)
     (define-key map (kbd "# a") #'fretboard-highlight-note)
     map))
-
-(defface fretboard-fretline-face
-  '((((background light)) :foreground "#ddd")
-    (((background dark))  :foreground "#333"))
-  "Face for the fret lines on the fretboard.")
-
-(defface fretboard-semitone-face
-  '((((background light)) :foreground "#777")
-    (((background dark))  :foreground "#999"))
-  "Face for the semitones.")
-
-(defface fretboard-fret-number-face
-  '((((background light)) :foreground "#33f")
-    (((background dark))  :foreground "#707"))
-  "Face used for the fret numbers.")
-
-(defcustom fretboard-text
-  "
-
- E  ||  F  | F# |  G  | G# | A | A# |  B  | C  | C# | D | D# |  E  | F  |
- B  ||  C  | C# |  D  | D# | E | F  |  F# | G  | G# | A | A# |  B  | C  |
- G  ||  G# | A  |  A# | B  | C | C# |  D  | D# | E  | F | F# |  G  | G# |
- D  ||  D# | E  |  F  | F# | G | G# |  A  | A# | B  | C | C# |  D  | D# |
- A  ||  A# | B  |  C  | C# | D | D# |  E  | F  | F# | G | G# |  A  | A# |
- E  ||  F  | F# |  G  | G# | A | A# |  B  | C  | C# | D | D# |  E  | F  |
-
-                  III        V        VII        IX            XII
-"
-  "The contents of the buffer created with `fretboard'.
-
-If customized, should keep the general conventions to preserve
-the correct syntax highlighting."
-  :group 'fretboard
-  :type 'string)
 
 (defvar fretboard-mode-font-lock-keywords
   '(("|+" . 'fretboard-fretline-face)
